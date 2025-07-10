@@ -12,15 +12,33 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
+@theme {
+  --color-primary-red: #EA5555;
+  --color-secondary-red: #FF9898;
+  --color-main-purple: #635FC7;
+  --color-secondary-red: #A8A4FF;
+  --color-primary-black: #000112;
+  --color-very-dark-grey: #20212C;
+  --color-dark-grey: #2B2C37;
+  --color-secondary-grey: #3E3F4E;
+  --color-medium-grey: #828FA3;
+  --color-light-blue: #E4EBFA;
+  --color-secondary-white: #F4F7FD;
+
+  --text-15px: 15px;
+}
+
+/* @media (prefers-color-scheme: dark) {
   :root {
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+} */
+
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
