@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
 import SideNavigation from "@/_components/SideNavigation";
+import { ThemeProvider } from "@/_components/ThemeProvider";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -21,10 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${plusJakartaSans.variable} bg-very-dark-grey flex min-h-screen border antialiased`}
+        className={`${plusJakartaSans.variable} bg-background text-foreground flex min-h-screen antialiased`}
       >
-        <SideNavigation />
-        {children}
+        <ThemeProvider>
+          <SideNavigation />
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );

@@ -4,16 +4,19 @@ import Image from "next/image";
 import Logo from "./Logo";
 import Link from "next/link";
 import ToggleSwitch from "./ToggleSwitch";
+import { usePathname } from "next/navigation";
 
 export default function SideNavigation() {
   const navLinks = [
-    { href: "/platform", label: "Platform Launch" },
+    { href: "/", label: "Platform Launch" },
     { href: "/marketing", label: "Marketing Plan" },
     { href: "/roadmap", label: "Roadmap" },
   ];
 
+  const pathName = usePathname();
+
   return (
-    <aside className="bg-dark-grey flex w-[300px] flex-col pr-6">
+    <aside className="bg-nav-background flex w-[300px] flex-col pr-6">
       <div className="pt-[33px] pl-[34px]">
         <Logo />
       </div>
@@ -28,7 +31,7 @@ export default function SideNavigation() {
             <Link
               href={navLink.href}
               key={index}
-              className="bg-main-purple border-dark-grey hover:bg-main-purple/80 flex items-center gap-4 rounded-r-[100px] border-b py-3.5 pr-6 pl-[34px] transition-colors last:border-b-0"
+              className={` ${pathName === navLink.href ? "bg-main-purple" : "bg-none"} hover:bg-main-purple/80 flex items-center gap-4 rounded-r-[100px] py-3.5 pr-6 pl-[34px] transition-colors`}
             >
               <Image
                 src="/icon-board.svg"
@@ -36,7 +39,7 @@ export default function SideNavigation() {
                 width={16}
                 height={16}
               />
-              <span className="text-[15px] leading-normal font-bold text-white">
+              <span className={`${pathName === navLink.href ? 'text-white' : 'text-medium-grey'} text-[15px] leading-normal font-bold`}>
                 {navLink.label}
               </span>
             </Link>
@@ -62,13 +65,7 @@ export default function SideNavigation() {
           width={16}
           height={16}
         />
-        <ToggleSwitch
-          initialState={false}
-          onToggle={(isOn) => {
-            console.log("Theme switched to:", isOn ? "dark" : "light");
-            // Here you can implement your theme switching logic
-          }}
-        />
+        <ToggleSwitch />
         <Image
           src="/icon-dark-theme.svg"
           alt="dark-icon-theme"
