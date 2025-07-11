@@ -1,7 +1,7 @@
 import { getBoardData } from "@/_lib/api";
 import Button from "@/ui/Button";
 
-export default async function Home() {
+export default async function Page() {
   const boardData = await getBoardData();
   console.log("This is the json data:", boardData);
 

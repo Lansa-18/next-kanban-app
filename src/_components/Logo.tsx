@@ -9,9 +9,9 @@ export default function Logo() {
   const { theme } = useTheme();
 
   return (
-    <div className="mb-[54px]">
+    <div className="">
       <Image
-        src={theme === "dark" ? logoDark : logoLight}
+        src={theme === "dark" ? logoLight : logoDark}
         width={152.53}
         height={25.22}
         alt="logo-icon"

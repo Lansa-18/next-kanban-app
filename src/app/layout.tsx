@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import "./globals.css";
-import SideNavigation from "@/_components/SideNavigation";
 import { ThemeProvider } from "@/_components/ThemeProvider";
+import Header from "@/_components/Header";
+import SideNavigation from "@/_components/SideNavigation";
+import OpenSideNav from "@/_components/OpenSideNav";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -21,14 +23,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${plusJakartaSans.variable} bg-background text-foreground flex min-h-screen antialiased`}
-      >
-        <ThemeProvider>
-          <SideNavigation />
-          {children}
-        </ThemeProvider>
-      </body>
+      <ThemeProvider>
+        <body
+          className={`${plusJakartaSans.variable} bg-background text-foreground border-primary-red flex min-h-screen antialiased`}
+        >
+          <section className="flex flex-1 flex-col">
+            <Header />
+            <div className="border-primary-red flex flex-1">
+              <SideNavigation />
+              {children}
+            </div>
+          </section>
+
+          <OpenSideNav />
+        </body>
+      </ThemeProvider>
     </html>
   );
 }
