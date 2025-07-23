@@ -10,7 +10,7 @@ export default function OpenSideNav() {
       {isSideNavOpen && (
         <button
           onClick={toggleSideNav}
-          className="bg-main-purple hover:bg-main-purple/80 focus:ring-main-purple fixed bottom-8 left-0 z-50 rounded-r-full p-4 transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-none"
+          className="bg-main-purple hover:bg-main-purple-hover focus:ring-main-purple fixed bottom-8 left-0 z-50 rounded-r-full p-4 transition-colors duration-200 focus:ring-2 focus:ring-offset-2 focus:outline-none"
           aria-label="Show sidebar"
         >
           <Image

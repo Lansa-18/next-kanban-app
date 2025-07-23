@@ -10,3 +10,4 @@ export async function getBoardData() {
     console.error("Error fetching data:", error);
   }
 }
+

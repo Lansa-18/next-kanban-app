@@ -42,7 +42,7 @@ export default function SideNavigation() {
                 <Link
                   href={navLink.href}
                   key={index}
-                  className={` ${pathName === navLink.href ? "bg-main-purple" : "bg-none"} hover:bg-main-purple/80 flex items-center gap-4 rounded-r-[100px] py-3.5 pr-6 pl-[34px] transition-colors`}
+                  className={` ${pathName === navLink.href ? "bg-main-purple" : "bg-none"} hover:bg-main-purple-hover flex items-center gap-4 rounded-r-[100px] py-3.5 pr-6 pl-[34px] transition-colors`}
                 >
                   <Image
                     src="/icon-board.svg"
