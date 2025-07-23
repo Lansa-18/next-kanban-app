@@ -42,8 +42,10 @@
   --color-medium-grey: #828fa3;
   --color-light-blue: #e4ebfa;
   --color-light-grey: #f4f7fd;
+  --shadow-custom: 0px 4px 6px 0px rgba(54, 78, 126, 0.10);
 
   --text-15px: 15px;
+  --text-12px: 12px;
 }
 
 /* @media (prefers-color-scheme: dark) {

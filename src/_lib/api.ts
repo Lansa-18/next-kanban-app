@@ -1,13 +1,28 @@
+import { supabase } from "./supabase";
+
 export async function getBoardData() {
-  try {
-    const response = await fetch("http://localhost:3000/boards");
+  const { data, error } = await supabase
+    .from("boards")
+    .select(
+      `
+      *,
+      columns (
+        *,
+        tasks (
+          *,
+          subtasks (*)
+        )
+      )
+    `,
+    )
+    .order("id")
+    .order("position", { foreignTable: "columns" })
+    .order("position", { foreignTable: "columns.tasks" });
 
-    if (!response.ok) throw new Error("Failed to fetch data");
-
-    const data = await response.json();
-    return data;
-  } catch (error) {
-    console.error("Error fetching data:", error);
+  if (error) {
+    console.error("Supabase error:", error);
+    throw new Error("Error getting the boards data.");
   }
-}
 
+  return data;
+}
