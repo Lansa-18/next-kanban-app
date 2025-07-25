@@ -6,6 +6,7 @@ import ToggleSwitch from "./ToggleSwitch";
 import { usePathname } from "next/navigation";
 import { useNavstore } from "@/store/useNavStore";
 import { motion, AnimatePresence } from "framer-motion";
+import BoardIcon from "./icons/BoardIcon";
 
 export default function SideNavigation() {
   const navLinks = [
@@ -30,7 +31,7 @@ export default function SideNavigation() {
             damping: 30,
             duration: 0.3,
           }}
-          className="bg-nav-background border-lines flex w-72 flex-col border-r pr-6 pb-8"
+          className="bg-nav-background border-lines flex w-[20.1rem] flex-col border-r pr-6 pb-8"
         >
           <article className="mt-[40px] flex flex-col">
             <p className="text-medium-grey mb-[19px] pl-[34px] text-[12px] leading-normal font-bold tracking-[2.4px]">
@@ -42,28 +43,24 @@ export default function SideNavigation() {
                 <Link
                   href={navLink.href}
                   key={index}
-                  className={` ${pathName === navLink.href ? "bg-main-purple" : "bg-none"} hover:bg-main-purple-hover flex items-center gap-4 rounded-r-[100px] py-3.5 pr-6 pl-[34px] transition-colors`}
+                  className={` ${pathName === navLink.href ? "bg-main-purple" : "bg-none"} group flex items-center gap-4 rounded-r-[100px] py-3.5 pr-6 pl-[34px] transition-all duration-300 hover:bg-white`}
                 >
                   <Image
+                    className="group-hover:fill-main-purple"
                     src="/icon-board.svg"
                     alt="icon-board"
                     width={16}
                     height={16}
                   />
                   <span
-                    className={`${pathName === navLink.href ? "text-white" : "text-medium-grey"} text-[15px] leading-normal font-bold`}
+                    className={`${pathName === navLink.href ? "text-white" : "text-medium-grey"} group-hover:text-main-purple text-[15px] leading-normal font-bold transition-all duration-300`}
                   >
                     {navLink.label}
                   </span>
                 </Link>
               ))}
               <button className="mt-2 flex items-center gap-3.5 pl-[34px]">
-                <Image
-                  src="/icon-board.svg"
-                  alt="icon-board"
-                  width={16}
-                  height={16}
-                />
+                <BoardIcon fill="#635fc7" />
                 <span className="text-main-purple text-15px leading-normal font-bold">
                   + Create New Board
                 </span>
@@ -89,7 +86,7 @@ export default function SideNavigation() {
 
           <article
             onClick={toggleSideNav}
-            className="mx-6 flex cursor-pointer items-center gap-4"
+            className="group/sidebar -pl-[34px] mx-6 flex cursor-pointer items-center gap-4 rounded-r-[100px] py-3.5 pr-6 transition-all duration-300 hover:bg-white"
           >
             <Image
               src="/icon-hide-sidebar.svg"
@@ -97,7 +94,7 @@ export default function SideNavigation() {
               width={18}
               height={16}
             />
-            <p className="text-15px text-medium-grey leading-normal font-bold">
+            <p className="text-15px text-medium-grey group-hover/sidebar:text-main-purple leading-normal font-bold transition-all duration-300">
               Hide Sidebar
             </p>
           </article>

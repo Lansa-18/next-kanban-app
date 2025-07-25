@@ -12,12 +12,6 @@ export default async function Home() {
 
   console.log(platformTodoColumns?.tasks);
 
-  // const marketingPlanData = boardData.at(1);
-
-  // const roadmapData = boardData.at(2);
-
-
-
   const columnObj: ColumnObjType[] = [
     {
       colType: "Todo",
@@ -36,11 +30,13 @@ export default async function Home() {
     },
   ];
 
+  // const columnObj: ColumnObjType = [];
+
   console.log(columnObj.at(0)?.colData);
 
   if (columnObj.length === 0) {
     return (
-      <article className="flex flex-1 items-center justify-center">
+      <article className="flex flex-1 items-center justify-center p-6">
         <div className="flex w-full max-w-lg flex-col gap-8 px-4">
           <p className="text-medium-grey text-center text-[18px] leading-normal font-bold">
             This board is empty. Create a new column to get started.
@@ -71,6 +67,10 @@ export default async function Home() {
         columnType={columnObj.at(2)?.colType}
         circleColor={columnObj.at(2)?.color}
       />
+
+      <div className="text-medium-grey hover:text-main-purple bg-gradient-overlay flex w-[300px] cursor-pointer items-center justify-center rounded-lg font-bold transition-all duration-300">
+        + New Column
+      </div>
     </article>
   );
 }

@@ -10,7 +10,14 @@
   --background: #f4f7fd;
   --foreground: #000112;
   --nav-background: #fff;
+  --add-task: #fff;
+
   --lines: #e4ebfa;
+  --gradient-overlay: linear-gradient(
+    180deg,
+    #e9effa 0%,
+    rgba(233, 239, 250, 0.5) 100%
+  );
 }
 
 /* Dark theme */
@@ -19,12 +26,21 @@
   --foreground: #ffffff;
   --nav-background: #2b2c37;
   --lines: #3e3f4e;
+  --add-task: #20212c;
+  --gradient-overlay: linear-gradient(
+    180deg,
+    rgba(43, 44, 55, 0.25) 0%,
+    rgba(43, 44, 55, 0.13) 100%
+  );
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-nav-background: var(--nav-background);
+  --background-image-gradient-overlay: var(--gradient-overlay);
+  --color-add-task: var(--add-task);
+
   --color-lines: var(--lines);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
@@ -42,7 +58,7 @@
   --color-medium-grey: #828fa3;
   --color-light-blue: #e4ebfa;
   --color-light-grey: #f4f7fd;
-  --shadow-custom: 0px 4px 6px 0px rgba(54, 78, 126, 0.10);
+  --shadow-custom: 0px 4px 6px 0px rgba(54, 78, 126, 0.1);
 
   --text-15px: 15px;
   --text-12px: 12px;
