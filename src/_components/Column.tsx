@@ -29,6 +29,7 @@ export default function Column({
 
       {columnObj?.colData?.map((el) => (
         <ColumnItem
+          task={el}
           key={el.id}
           numOfSubtasks={el.subtasks.length}
           mainText={el.title}

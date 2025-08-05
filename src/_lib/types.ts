@@ -1,4 +1,4 @@
-interface subTasksObj {
+export interface subTasksObj {
   id: number;
   title: string;
   taskId: number;
@@ -6,7 +6,7 @@ interface subTasksObj {
   isCompleted: boolean;
 }
 
-interface tasksObj {
+export interface tasksObj {
   id: number;
   title: string;
   status: string;

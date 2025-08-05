@@ -10,8 +10,6 @@ export default async function Home() {
   const platformDoingColumns = platformLaunchData?.columns[1];
   const platformDoneColumns = platformLaunchData?.columns[2];
 
-  console.log(platformTodoColumns?.tasks);
-
   const columnObj: ColumnObjType[] = [
     {
       colType: "Todo",
@@ -32,7 +30,7 @@ export default async function Home() {
 
   // const columnObj: ColumnObjType = [];
 
-  console.log(columnObj.at(0)?.colData);
+  // console.log(columnObj.at(0)?.colData);
 
   if (columnObj.length === 0) {
     return (

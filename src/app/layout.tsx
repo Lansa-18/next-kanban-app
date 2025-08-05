@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/_components/ThemeProvider";
 import Header from "@/_components/Header";
 import SideNavigation from "@/_components/SideNavigation";
 import OpenSideNav from "@/_components/OpenSideNav";
+import ModalProvider from "@/_components/ModalProvider";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
   variable: "--font-plus-jakarta-sans",
@@ -25,7 +26,7 @@ export default function RootLayout({
     <html lang="en">
       <ThemeProvider>
         <body
-          className={`${plusJakartaSans.variable} bg-background text-foreground border-primary-red flex min-h-screen antialiased`}
+          className={`${plusJakartaSans.variable} bg-background text-foreground border-primary-red relative flex min-h-screen antialiased`}
         >
           <section className="flex flex-1 flex-col">
             <Header />
@@ -36,6 +37,7 @@ export default function RootLayout({
           </section>
 
           <OpenSideNav />
+          <ModalProvider />
         </body>
       </ThemeProvider>
     </html>
