@@ -1,3 +1,5 @@
+"use client";
+
 /**
  * ViewTaskModal Component - Modal for displaying detailed task information
  * Shows task title, description, subtasks checklist, and status controls
@@ -7,20 +9,39 @@
 import SubTaskList from "./SubTaskList";
 import StatusDropdown from "./StatusDropdown";
 import { usePlatformLaunchStore } from "@/store/usePlatformLaunchStore";
+import { useEffect, useRef } from "react";
 
-/**
- * ViewTaskModal displays comprehensive task details in an overlay modal
- * Includes task editing and deletion options, subtasks management, and status updates
- */
 export default function ViewTaskModal() {
-  // Zustand store for modal state and selected task data
-  const { setIsTaskOpen, selectedTaskToView } = usePlatformLaunchStore();
+  const modalRef = useRef<HTMLElement>(null);
+  const { isTaskOpen, setIsTaskOpen, selectedTaskToView } =
+    usePlatformLaunchStore();
+
+  // This is to handle closing the modal once any where outside the modal is clicked.
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (modalRef.current && !modalRef.current.contains(e.target as Node)) {
+        setIsTaskOpen(false);
+      }
+    };
+
+    if (isTaskOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isTaskOpen, setIsTaskOpen]);
 
   return (
     // Modal overlay with dark background
     <section className="fixed flex min-h-screen w-full items-center justify-center bg-black/50">
       {/* Modal content container */}
-      <article className="bg-nav-background flex w-[30rem] flex-col gap-6 rounded-[6px] p-8">
+      <article
+        onClick={(e) => e.stopPropagation()}
+        className="bg-nav-background flex w-[30rem] flex-col gap-6 rounded-[6px] p-8"
+        ref={modalRef}
+      >
         {/* Modal Header - Edit and Delete options */}
         <div className="text-15px flex justify-between font-medium">
           <p className="text-medium-grey cursor-pointer transition-all duration-300 hover:scale-105">

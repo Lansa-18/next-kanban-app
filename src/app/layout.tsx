@@ -12,6 +12,7 @@ import Header from "@/_components/Header";
 import SideNavigation from "@/_components/SideNavigation";
 import OpenSideNav from "@/_components/OpenSideNav";
 import ModalProvider from "@/_components/ModalProvider";
+import ReactQueryProvider from "@/_components/ReactQueryProvider";
 
 // Google Font configuration
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -38,34 +39,29 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* Theme wrapper for dark/light mode support */}
-      <ThemeProvider>
-        <body
-          className={`${plusJakartaSans.variable} bg-background text-foreground border-primary-red relative flex min-h-screen antialiased`}
-        >
-          {/* Main application layout */}
-          <section className="flex flex-1 flex-col">
-            {/* Top header bar */}
-            <Header />
+      <ReactQueryProvider>
+        <ThemeProvider>
+          <body
+            className={`${plusJakartaSans.variable} bg-background text-foreground border-primary-red relative flex min-h-screen antialiased`}
+          >
+            {/* Main application layout */}
+            <section className="flex flex-1 flex-col">
+              {/* Top header bar */}
+              <Header />
 
-            {/* Main content area with sidebar and page content */}
-            <div className="border-primary-red flex flex-1">
-              {/* Collapsible sidebar navigation */}
-              <SideNavigation />
+              {/* Main content area with sidebar and page content */}
+              <div className="border-primary-red flex flex-1">
+                <SideNavigation />
 
-              {/* Page content (children from Next.js routing) */}
-              {children}
-            </div>
-          </section>
+                {children}
+              </div>
+            </section>
 
-          {/* Floating "Show Sidebar" button (when sidebar is collapsed) */}
-          <OpenSideNav />
-
-          {/* Modal management - handles all application modals */}
-          {/* Uses client component to avoid "use client" in layout */}
-          <ModalProvider />
-        </body>
-      </ThemeProvider>
+            <OpenSideNav />
+            <ModalProvider />
+          </body>
+        </ThemeProvider>
+      </ReactQueryProvider>
     </html>
   );
 }

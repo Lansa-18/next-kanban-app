@@ -4,16 +4,36 @@
  * Server component that fetches data at build/request time
  */
 
+"use client";
+
 import Column from "@/_components/Column";
-import { getBoardData } from "@/_lib/api";
-import { boardDataObj, ColumnObjType } from "@/_lib/types";
+import {  ColumnObjType } from "@/_lib/types";
+import { useGetBoardData } from "@/hooks/useGetBoardData";
 import Button from "@/ui/Button";
 
-export default async function Home() {
-  // Fetch all board data from Supabase (server-side)
-  const boardData: boardDataObj[] = await getBoardData();
+export default function Home() {
+  const { data: boardData, isLoading, isError } = useGetBoardData();
 
-  // Extract the first board (Platform Launch) - array indexing is safe due to data structure
+  if (isLoading) {
+    return (
+      <article className="flex flex-1 items-center justify-center p-6">
+        <div className="text-medium-grey text-center text-[18px] leading-normal font-bold">
+          Loading...
+        </div>
+      </article>
+    );
+  }
+
+  if (isError || !boardData) {
+    return (
+      <article className="flex flex-1 items-center justify-center p-6">
+        <div className="text-primary-red text-center text-[18px] leading-normal font-bold">
+          Error loading board data
+        </div>
+      </article>
+    );
+  }
+
   const platformLaunchData = boardData.at(0);
 
   // Extract individual columns by their expected positions

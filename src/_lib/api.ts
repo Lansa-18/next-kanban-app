@@ -4,6 +4,7 @@
  */
 
 import { supabase } from "./supabase";
+import { boardDataObj } from "./types";
 
 /**
  * Fetches complete board data including nested columns, tasks, and subtasks
@@ -17,7 +18,7 @@ import { supabase } from "./supabase";
  *
  * @throws {Error} Throws error if Supabase query fails
  */
-export async function getBoardData() {
+export async function getBoardData(): Promise<boardDataObj[]> {
   const { data, error } = await supabase
     .from("boards")
     .select(
@@ -35,9 +36,9 @@ export async function getBoardData() {
     // Order boards by ID (primary boards first)
     .order("id")
     // Order columns within each board by their position
-    .order("position", { foreignTable: "columns" })
+    .order("position", { referencedTable: "columns" })
     // Order tasks within each column by their position
-    .order("position", { foreignTable: "columns.tasks" });
+    .order("position", { referencedTable: "columns.tasks" });
 
   // Handle any database errors
   if (error) {
