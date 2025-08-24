@@ -7,7 +7,7 @@
 "use client";
 
 import Column from "@/_components/Column";
-import {  ColumnObjType } from "@/_lib/types";
+import { ColumnObjType } from "@/_lib/types";
 import { useGetBoardData } from "@/hooks/useGetBoardData";
 import Button from "@/ui/Button";
 
@@ -17,7 +17,7 @@ export default function Home() {
   if (isLoading) {
     return (
       <article className="flex flex-1 items-center justify-center p-6">
-        <div className="text-medium-grey text-center text-[18px] leading-normal font-bold">
+        <div className="text-medium-grey text-18px text-center leading-normal font-bold">
           Loading...
         </div>
       </article>
@@ -27,7 +27,7 @@ export default function Home() {
   if (isError || !boardData) {
     return (
       <article className="flex flex-1 items-center justify-center p-6">
-        <div className="text-primary-red text-center text-[18px] leading-normal font-bold">
+        <div className="text-primary-red text-18px text-center leading-normal font-bold">
           Error loading board data
         </div>
       </article>
@@ -68,7 +68,7 @@ export default function Home() {
     return (
       <article className="flex flex-1 items-center justify-center p-6">
         <div className="flex w-full max-w-lg flex-col gap-8 px-4">
-          <p className="text-medium-grey text-center text-[18px] leading-normal font-bold">
+          <p className="text-medium-grey text-18px text-center leading-normal font-bold">
             This board is empty. Create a new column to get started.
           </p>
           <Button className="w-[50%] self-center">+ Add New Column</Button>

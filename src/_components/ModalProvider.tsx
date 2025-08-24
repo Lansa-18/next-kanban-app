@@ -6,27 +6,22 @@
 
 "use client";
 
+import DeleteConfirmModal from "./DeleteConfirmModal";
 import ViewTaskModal from "./ViewTaskModal";
 import { usePlatformLaunchStore } from "@/store/usePlatformLaunchStore";
 
-/**
- * ModalProvider manages the display of application modals
- * Uses Zustand store to determine which modals should be visible
- * This pattern keeps the root layout as a server component
- */
 export default function ModalProvider() {
-  // Subscribe to modal state from Zustand store
-  const { isTaskOpen } = usePlatformLaunchStore();
+  const { isTaskOpen, isDeleteConfirmOpen } = usePlatformLaunchStore();
 
   return (
     <>
       {/* Conditionally render ViewTaskModal based on store state */}
       {isTaskOpen && <ViewTaskModal />}
+      {isDeleteConfirmOpen && <DeleteConfirmModal />}
 
       {/* Future modals can be added here:
           {isAddTaskOpen && <AddTaskModal />}
           {isEditTaskOpen && <EditTaskModal />}
-          {isDeleteConfirmOpen && <DeleteConfirmModal />}
       */}
     </>
   );

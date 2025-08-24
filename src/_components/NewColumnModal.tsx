@@ -4,8 +4,8 @@ import Subtasks from "./Subtasks";
 
 export default function NewColumnModal() {
   return (
-    <section className="flex items-center justify-center border absolute w-full h-full ">
-      <article className="bg-dark-grey rounded-[6px] p-8">
+    <section className="absolute flex h-full w-full items-center justify-center border">
+      <article className="bg-dark-grey rounded-6px p-8">
         <form>
           <h3 className="text-xl leading-normal font-bold text-white">
             Add New Task

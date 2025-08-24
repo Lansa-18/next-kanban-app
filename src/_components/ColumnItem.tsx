@@ -9,39 +9,23 @@
 import { tasksObj } from "@/_lib/types";
 import { usePlatformLaunchStore } from "@/store/usePlatformLaunchStore";
 
-/**
- * Props interface for ColumnItem component
- */
 interface ColumnItemsProps {
-  mainText: string; // Task title to display
-  numOfSubtasks: number; // Total number of subtasks
-  task: tasksObj; // Complete task object for modal display
+  mainText: string;
+  numOfSubtasks: number;
+  task: tasksObj;
 }
 
-/**
- * ColumnItem represents a single task card in the kanban board
- *
- * @param mainText - The task title displayed on the card
- * @param numOfSubtasks - Number of subtasks (for progress display)
- * @param task - Complete task data passed to modal when clicked
- */
 export default function ColumnItem({
   mainText,
   numOfSubtasks,
   task,
 }: ColumnItemsProps) {
-  // Zustand store hooks for modal state management
   const { toggleTaskVisibility, setSelectedTaskToView } =
     usePlatformLaunchStore();
 
-  /**
-   * Handle task card click - Opens modal with task details
-   * Sets the selected task in global state and shows the modal
-   */
   const setTask = () => {
-    console.log(task); // Debug: Log task data
-    setSelectedTaskToView(task); // Store task data for modal
-    toggleTaskVisibility(); // Show the ViewTaskModal
+    setSelectedTaskToView(task);
+    toggleTaskVisibility();
   };
 
   return (

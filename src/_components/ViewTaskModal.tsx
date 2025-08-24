@@ -13,8 +13,17 @@ import { useEffect, useRef } from "react";
 
 export default function ViewTaskModal() {
   const modalRef = useRef<HTMLElement>(null);
-  const { isTaskOpen, setIsTaskOpen, selectedTaskToView } =
-    usePlatformLaunchStore();
+  const {
+    isTaskOpen,
+    setIsTaskOpen,
+    setIsDeleteConfirmOpen,
+    selectedTaskToView,
+  } = usePlatformLaunchStore();
+
+  const handleOpenDeleteModal = () => {
+    setIsDeleteConfirmOpen(true);
+    setIsTaskOpen(false);
+  };
 
   // This is to handle closing the modal once any where outside the modal is clicked.
   useEffect(() => {
@@ -39,7 +48,7 @@ export default function ViewTaskModal() {
       {/* Modal content container */}
       <article
         onClick={(e) => e.stopPropagation()}
-        className="bg-nav-background flex w-[30rem] flex-col gap-6 rounded-[6px] p-8"
+        className="bg-nav-background rounded-6px flex w-[30rem] flex-col gap-6 p-8"
         ref={modalRef}
       >
         {/* Modal Header - Edit and Delete options */}
@@ -47,7 +56,10 @@ export default function ViewTaskModal() {
           <p className="text-medium-grey cursor-pointer transition-all duration-300 hover:scale-105">
             Edit Task
           </p>
-          <p className="text-primary-red cursor-pointer transition-all duration-300 hover:scale-105">
+          <p
+            onClick={handleOpenDeleteModal}
+            className="text-primary-red cursor-pointer transition-all duration-300 hover:scale-105"
+          >
             Delete Task
           </p>
         </div>
@@ -55,12 +67,12 @@ export default function ViewTaskModal() {
         {/* Task Information Section */}
         <div className="flex flex-col gap-6">
           {/* Task Title */}
-          <p className="text-foreground text-[18px] leading-normal font-bold">
+          <p className="text-foreground text-18px leading-normal font-bold">
             {selectedTaskToView?.title}
           </p>
 
           {/* Task Description with fallback */}
-          <p className="text-medium-grey text-[13px] leading-[23px] font-medium">
+          <p className="text-medium-grey text-13px leading-[23px] font-medium">
             {selectedTaskToView?.description &&
             selectedTaskToView.description.trim()
               ? selectedTaskToView.description
