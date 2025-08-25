@@ -79,7 +79,7 @@ export default function Home() {
 
   // Main board layout with three columns and "Add New Column" option
   return (
-    <article className="flex gap-6 p-6">
+    <article className="flex gap-6 p-6 bg-background">
       {/* Todo Column */}
       <Column
         columnObj={columnObj.at(0)}

@@ -15,6 +15,7 @@ export default function ViewTaskModal() {
   const modalRef = useRef<HTMLElement>(null);
   const {
     isTaskOpen,
+    setIsEditTaskOpen,
     setIsTaskOpen,
     setIsDeleteConfirmOpen,
     selectedTaskToView,
@@ -53,7 +54,10 @@ export default function ViewTaskModal() {
       >
         {/* Modal Header - Edit and Delete options */}
         <div className="text-15px flex justify-between font-medium">
-          <p className="text-medium-grey cursor-pointer transition-all duration-300 hover:scale-105">
+          <p
+            onClick={() => setIsEditTaskOpen(true)}
+            className="text-medium-grey cursor-pointer transition-all duration-300 hover:scale-105"
+          >
             Edit Task
           </p>
           <p

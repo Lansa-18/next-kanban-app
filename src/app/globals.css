@@ -19,7 +19,7 @@
     rgba(233, 239, 250, 0.5) 100%
   );
   --view-modal: #828fa3;
-  --cancel-btn: #635fc740;
+  --cancel-btn: #635fc71a;
 }
 
 /* Dark theme */
@@ -68,9 +68,6 @@
 
   --text-15px: 15px;
   --text-12px: 12px;
-  --text-18px: 18px;
-  --text-13px: 13px;
-  --radius-6px: 6px;
 }
 
 /* @media (prefers-color-scheme: dark) {
