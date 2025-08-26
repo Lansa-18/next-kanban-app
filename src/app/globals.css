@@ -68,6 +68,9 @@
 
   --text-15px: 15px;
   --text-12px: 12px;
+  --text-13px: 13px;
+
+  --radius-6px: 6px;
 }
 
 /* @media (prefers-color-scheme: dark) {

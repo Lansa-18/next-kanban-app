@@ -9,12 +9,14 @@ import { create } from "zustand";
 
 interface PlatformmState {
   isTaskOpen: boolean;
+  isAddTaskOpen: boolean;
   isEditTaskOpen: boolean;
   isDeleteConfirmOpen: boolean;
   selectedTaskToView: tasksObj | null;
 
   // Actions
   setIsTaskOpen: (curState: boolean) => void;
+  setIsAddTaskOpen: (curState: boolean) => void;
   setIsEditTaskOpen: (curState: boolean) => void;
   setIsDeleteConfirmOpen: (curState: boolean) => void;
   setSelectedTaskToView: (task: tasksObj) => void;
@@ -24,6 +26,7 @@ interface PlatformmState {
 export const usePlatformLaunchStore = create<PlatformmState>((set) => ({
   // Initial state
   isTaskOpen: false,
+  isAddTaskOpen: false,
   isEditTaskOpen: false,
   isDeleteConfirmOpen: false,
   selectedTaskToView: null,
@@ -32,6 +35,8 @@ export const usePlatformLaunchStore = create<PlatformmState>((set) => ({
     set({
       isTaskOpen: curState,
     }),
+
+  setIsAddTaskOpen: (curState: boolean) => set({ isAddTaskOpen: curState }),
 
   setIsEditTaskOpen: (curState: boolean) => set({ isEditTaskOpen: curState }),
 

@@ -12,18 +12,20 @@ import ViewTaskModal from "./ViewTaskModal";
 import { usePlatformLaunchStore } from "@/store/usePlatformLaunchStore";
 
 export default function ModalProvider() {
-  const { isTaskOpen, isEditTaskOpen, isDeleteConfirmOpen } = usePlatformLaunchStore();
+  const { isTaskOpen, isAddTaskOpen, isEditTaskOpen, isDeleteConfirmOpen } =
+    usePlatformLaunchStore();
 
   return (
     <>
       {/* Conditionally render ViewTaskModal based on store state */}
       {isTaskOpen && <ViewTaskModal />}
       {isDeleteConfirmOpen && <DeleteConfirmModal />}
-      {isEditTaskOpen && <EditTaskModal />}
-
-      {/* Future modals can be added here:
-          {isAddTaskOpen && <AddTaskModal />}
-      */}
+      {isEditTaskOpen && (
+        <EditTaskModal type="Edit Task" btnName="Save Changes" />
+      )}
+      {isAddTaskOpen && (
+        <EditTaskModal type="Add New Task" btnName="Create Task" />
+      )}
     </>
   );
 }

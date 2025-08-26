@@ -14,6 +14,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { usePlatformLaunchStore } from "@/store/usePlatformLaunchStore";
+import StatusDropdown from "./StatusDropdown";
+import { useEffect, useRef } from "react";
+
+interface EditTaskModalProps {
+  type: string;
+  btnName: string;
+}
 
 const editTaskSchema = z.object({
   title: z.string().min(1, "Title is required"),
@@ -30,8 +37,30 @@ const editTaskSchema = z.object({
 
 type EditTaskFormData = z.infer<typeof editTaskSchema>;
 
-export default function EditTaskModal() {
-  const { selectedTaskToView } = usePlatformLaunchStore();
+export default function EditTaskModal({ type, btnName }: EditTaskModalProps) {
+  const editModalRef = useRef<HTMLElement>(null);
+  const { selectedTaskToView, isEditTaskOpen, setIsEditTaskOpen } =
+    usePlatformLaunchStore();
+
+  // This is to handle closing the modal once any where outside the modal is clicked.
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (
+        editModalRef.current &&
+        !editModalRef.current.contains(e.target as Node)
+      ) {
+        setIsEditTaskOpen(false);
+      }
+    };
+
+    if (isEditTaskOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isEditTaskOpen, setIsEditTaskOpen]);
 
   const form = useForm<EditTaskFormData>({
     resolver: zodResolver(editTaskSchema),
@@ -61,8 +90,11 @@ export default function EditTaskModal() {
 
   return (
     <section className="fixed flex min-h-screen w-full items-center justify-center bg-black/50">
-      <article className="bg-nav-background rounded-6px flex w-[30rem] flex-col gap-6 p-8">
-        <h2 className="text-foreground text-[18px] font-bold">Edit Task</h2>
+      <article
+        ref={editModalRef}
+        className="bg-nav-background rounded-6px flex w-[30rem] flex-col gap-6 p-8"
+      >
+        <h2 className="text-foreground text-[18px] font-bold">{type}</h2>
 
         <Form {...form}>
           <form
@@ -150,7 +182,7 @@ export default function EditTaskModal() {
               type="button"
               variant="secondary"
               onClick={addSubtask}
-              className="bg-main-purple/10 text-main-purple hover:bg-main-purple/20 rounded-full py-2 text-[13px] font-bold"
+              className="bg-cancel-btn text-main-purple hover:bg-main-purple/20 rounded-full py-2 text-[13px] font-bold"
             >
               + Add New Subtask
             </Button>
@@ -160,18 +192,14 @@ export default function EditTaskModal() {
               name="status"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-foreground text-[12px] font-bold">
-                    Status
-                  </FormLabel>
                   <FormControl>
-                    <select
-                      {...field}
-                      className="bg-nav-background text-foreground border-[#828FA340] rounded-[4px] focus:border-main-purple w-full border px-4 py-2 text-[13px] focus:outline-none"
-                    >
-                      <option value="Todo">Todo</option>
-                      <option value="Doing">Doing</option>
-                      <option value="Done">Done</option>
-                    </select>
+                    <StatusDropdown
+                      label="Status"
+                      currentStatus={field.value}
+                      onStatusChange={(status) => {
+                        field.onChange(status);
+                      }}
+                    />
                   </FormControl>
                   <FormMessage className="text-primary-red text-[12px]" />
                 </FormItem>
@@ -182,7 +210,7 @@ export default function EditTaskModal() {
               type="submit"
               className="bg-main-purple hover:bg-main-purple-hover rounded-full py-2 text-[13px] font-bold text-white"
             >
-              Save Changes
+              {btnName}
             </Button>
           </form>
         </Form>

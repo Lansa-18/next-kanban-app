@@ -13,6 +13,7 @@ import SideNavigation from "@/_components/SideNavigation";
 import OpenSideNav from "@/_components/OpenSideNav";
 import ModalProvider from "@/_components/ModalProvider";
 import ReactQueryProvider from "@/_components/ReactQueryProvider";
+import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
 
 // Google Font configuration
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -26,12 +27,6 @@ export const metadata: Metadata = {
   description: "Allows you to efficiently manage your tasks.",
 };
 
-/**
- * RootLayout defines the base HTML structure and layout for all pages
- * Includes theme support, navigation, and modal management
- *
- * @param children - Page content to be rendered in the main area
- */
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -59,6 +54,7 @@ export default function RootLayout({
 
             <OpenSideNav />
             <ModalProvider />
+            <ReactQueryDevtools />
           </body>
         </ThemeProvider>
       </ReactQueryProvider>

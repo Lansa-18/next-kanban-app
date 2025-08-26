@@ -4,12 +4,14 @@ import { useState } from "react";
 
 interface StatusDropdownProps {
   currentStatus?: string;
+  label: string;
   onStatusChange?: (status: string) => void;
 }
 
 export default function StatusDropdown({
   currentStatus = "Doing",
   onStatusChange,
+  label
 }: StatusDropdownProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedStatus, setSelectedStatus] = useState(currentStatus);
@@ -30,7 +32,7 @@ export default function StatusDropdown({
     <div className="relative w-full">
       {/* Label */}
       <label className="text-view-modal mb-2 block text-xs font-bold">
-        Current Status
+        {label}
       </label>
 
       {/* Dropdown Button */}

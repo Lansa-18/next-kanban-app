@@ -4,17 +4,24 @@ import Button from "@/ui/Button";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import Logo from "./Logo";
-import AddTaskModal from "./AddTaskModal";
+import Options from "./Options";
 import { useState } from "react";
+import { usePlatformLaunchStore } from "@/store/usePlatformLaunchStore";
 
 export default function Header() {
-  const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
+  const { setIsAddTaskOpen } = usePlatformLaunchStore();
+  const [isOptionsOpen, setIsOptionsOpen] = useState(false);
   const pathName = usePathname();
   let headerText;
 
-  const toggleAddTask = () => {
-    setIsAddTaskOpen(prev => !prev);
-  }
+  const toggleOptions = () => {
+    setIsOptionsOpen((prev) => !prev);
+  };
+
+  const handleOpenAddTaskModal = () => {
+    console.log("The add task button was clicked.");
+    setIsAddTaskOpen(true);
+  };
 
   switch (pathName) {
     case "/":
@@ -29,6 +36,7 @@ export default function Header() {
     default:
       headerText = "";
   }
+
   return (
     <nav className="bg-nav-background border-lines flex items-center border-t border-b px-6">
       <div className="border-primary-red w-[277.5px]">
@@ -37,9 +45,10 @@ export default function Header() {
 
       <div className="border-lines flex flex-1 items-center justify-between border-l py-4 pl-6">
         <h2 className="text-2xl font-bold">{headerText}</h2>{" "}
-        <div onClick={toggleAddTask} className="flex items-center gap-6 relative">
-          <Button>+ Add New Task</Button>
+        <div className="relative flex items-center gap-6">
+          <Button onClick={handleOpenAddTaskModal}>+ Add New Task</Button>
           <Image
+            onClick={toggleOptions}
             className="cursor-pointer"
             src="/icon-vertical-ellipsis.svg"
             width={5}
@@ -47,7 +56,7 @@ export default function Header() {
             alt="more-options-icon"
           />
 
-          <AddTaskModal isAddTaskOpen={isAddTaskOpen} />
+          <Options isOptionsOpen={isOptionsOpen} />
         </div>
       </div>
     </nav>

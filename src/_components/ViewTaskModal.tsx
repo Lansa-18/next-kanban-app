@@ -97,6 +97,7 @@ export default function ViewTaskModal() {
 
         {/* Status Management Dropdown */}
         <StatusDropdown
+          label="Current Status"
           currentStatus={selectedTaskToView?.status}
           onStatusChange={(status) => {
             console.log("Status changed to:", status);
