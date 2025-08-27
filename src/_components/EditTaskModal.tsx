@@ -74,7 +74,7 @@ export default function EditTaskModal({ type, btnName }: EditTaskModalProps) {
         type === "edit"
           ? selectedTaskToView?.subtasks.map((subtask) => ({
               title: subtask.title,
-              isCompleted: subtask.isCompleted,
+              isCompleted: subtask.is_completed,
             }))
           : [{}, {}],
       status: type === "edit" ? selectedTaskToView?.status : "Todo",

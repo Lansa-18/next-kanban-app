@@ -14,16 +14,20 @@ interface ColumnItemsProps {
   mainText: string;
   numOfSubtasks: number;
   task: tasksObj;
+  numSubtasksCompleted: number;
 }
 
 export default function ColumnItem({
   mainText,
   numOfSubtasks,
   task,
+  numSubtasksCompleted,
 }: ColumnItemsProps) {
   const { toggleTaskVisibility } = usePlatformLaunchStore();
 
   const { setSelectedTaskToView } = useGlobalStore();
+
+  // console.log(numSubtasksCompleted);
 
   const setTask = () => {
     setSelectedTaskToView(task);
@@ -45,7 +49,7 @@ export default function ColumnItem({
 
           {/* Subtask Progress - TODO: Calculate completed subtasks */}
           <p className="text-medium-grey text-12px font-bold">
-            0 of {numOfSubtasks} subtasks
+            {numSubtasksCompleted} of {numOfSubtasks} subtasks
           </p>
         </div>
       </article>

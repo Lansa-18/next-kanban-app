@@ -19,6 +19,11 @@ export default function ViewTaskModal() {
     usePlatformLaunchStore();
   const { selectedTaskToView } = useGlobalStore();
 
+  const completedSubTasks = selectedTaskToView?.subtasks.filter(
+    (subtask) => subtask.is_completed,
+  );
+  const totalSubTasks = selectedTaskToView?.subtasks.length;
+
   // This is to handle closing the modal once any where outside the modal is clicked.
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -80,7 +85,7 @@ export default function ViewTaskModal() {
         <div className="space-y-2">
           {/* TODO: Calculate actual completed subtasks count */}
           <p className="text-view-modal text-xs leading-normal font-bold">
-            Subtasks (2 of 3)
+            Subtasks ({completedSubTasks?.length || 0} of {totalSubTasks})
           </p>
 
           {/* Interactive subtasks checklist */}

@@ -8,7 +8,7 @@ export interface subTasksObj {
   title: string;
   taskId: number;
   createdAt: string;
-  isCompleted: boolean;
+  is_completed: boolean;
 }
 
 export interface tasksObj {

@@ -16,7 +16,6 @@ import { useEffect } from "react";
 export default function Home() {
   const { data: boardData, isLoading, isError } = useGetBoardData();
   const { setSelectedBoard } = useGlobalStore();
-  console.log(boardData);
 
   useEffect(() => {
     if (!boardData) return;

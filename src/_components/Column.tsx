@@ -12,26 +12,19 @@ import { ColumnObjType } from "@/_lib/types";
  * Props interface for Column component
  */
 interface columnProps {
-  circleColor: string | undefined; // Hex color for the column indicator circle
-  columnType: string | undefined; // Column name (Todo, Doing, Done)
-  numOfItems: number | undefined; // Number of tasks in this column
-  columnObj: ColumnObjType | undefined; // Column data containing tasks
+  circleColor: string | undefined;
+  columnType: string | undefined;
+  numOfItems: number | undefined;
+  columnObj: ColumnObjType | undefined;
 }
 
-/**
- * Column component renders a single kanban column with header and tasks
- *
- * @param circleColor - Color for the visual indicator circle
- * @param columnType - Display name of the column
- * @param numOfItems - Count of tasks for display in header
- * @param columnObj - Complete column data including tasks array
- */
 export default function Column({
   circleColor,
   columnType,
   numOfItems,
   columnObj,
 }: columnProps) {
+  console.log(columnObj);
   return (
     <div className="space-y-[24px]">
       {/* Column Header - Shows colored circle and task count */}
@@ -55,6 +48,9 @@ export default function Column({
           key={el.id} // Unique key for React rendering
           numOfSubtasks={el.subtasks.length} // Count of subtasks for display
           mainText={el.title} // Task title for card display
+          numSubtasksCompleted={
+            el.subtasks.filter((subtask) => subtask.is_completed).length
+          }
         />
       ))}
     </div>
