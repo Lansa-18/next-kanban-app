@@ -16,9 +16,10 @@ import {
 import { usePlatformLaunchStore } from "@/store/usePlatformLaunchStore";
 import StatusDropdown from "./StatusDropdown";
 import { useEffect, useRef } from "react";
+import { useGlobalStore } from "@/store/useGlobalStore";
 
 interface EditTaskModalProps {
-  type: string;
+  type?: string;
   btnName: string;
 }
 
@@ -39,8 +40,9 @@ type EditTaskFormData = z.infer<typeof editTaskSchema>;
 
 export default function EditTaskModal({ type, btnName }: EditTaskModalProps) {
   const editModalRef = useRef<HTMLElement>(null);
-  const { selectedTaskToView, isEditTaskOpen, setIsEditTaskOpen } =
+  const { isEditTaskOpen, isAddTaskOpen, setIsEditTaskOpen, setIsAddTaskOpen } =
     usePlatformLaunchStore();
+  const { selectedTaskToView } = useGlobalStore();
 
   // This is to handle closing the modal once any where outside the modal is clicked.
   useEffect(() => {
@@ -50,28 +52,32 @@ export default function EditTaskModal({ type, btnName }: EditTaskModalProps) {
         !editModalRef.current.contains(e.target as Node)
       ) {
         setIsEditTaskOpen(false);
+        setIsAddTaskOpen(false);
       }
     };
 
-    if (isEditTaskOpen) {
+    if (isEditTaskOpen || isAddTaskOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isEditTaskOpen, setIsEditTaskOpen]);
+  }, [isEditTaskOpen, setIsEditTaskOpen, isAddTaskOpen, setIsAddTaskOpen]);
 
   const form = useForm<EditTaskFormData>({
     resolver: zodResolver(editTaskSchema),
     defaultValues: {
-      title: selectedTaskToView?.title,
-      description: selectedTaskToView?.description,
-      subtasks: selectedTaskToView?.subtasks.map((subtask) => ({
-        title: subtask.title,
-        isCompleted: subtask.isCompleted,
-      })),
-      status: selectedTaskToView?.status,
+      title: type === "edit" ? selectedTaskToView?.title : "",
+      description: type === "edit" ? selectedTaskToView?.description : "",
+      subtasks:
+        type === "edit"
+          ? selectedTaskToView?.subtasks.map((subtask) => ({
+              title: subtask.title,
+              isCompleted: subtask.isCompleted,
+            }))
+          : [{}, {}],
+      status: type === "edit" ? selectedTaskToView?.status : "Todo",
     },
   });
 
@@ -94,7 +100,9 @@ export default function EditTaskModal({ type, btnName }: EditTaskModalProps) {
         ref={editModalRef}
         className="bg-nav-background rounded-6px flex w-[30rem] flex-col gap-6 p-8"
       >
-        <h2 className="text-foreground text-[18px] font-bold">{type}</h2>
+        <h2 className="text-foreground text-[18px] font-bold">
+          {type === "edit" ? "Edit Task" : "Add New Task"}
+        </h2>
 
         <Form {...form}>
           <form
@@ -106,17 +114,17 @@ export default function EditTaskModal({ type, btnName }: EditTaskModalProps) {
               name="title"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-foreground text-[12px] font-bold">
+                  <FormLabel className="text-foreground text-12px font-bold">
                     Title
                   </FormLabel>
                   <FormControl>
                     <input
                       {...field}
-                      className="bg-nav-background text-foreground focus:border-main-purple w-full rounded-[4px] border border-[#828FA340] px-4 py-2.5 text-[13px] focus:outline-none"
+                      className="bg-nav-background text-foreground focus:border-main-purple text-13px rounded-4px w-full border border-[#828FA340] px-4 py-2.5 focus:outline-none"
                       placeholder="e.g. Take coffee break"
                     />
                   </FormControl>
-                  <FormMessage className="text-primary-red text-[12px]" />
+                  <FormMessage className="text-primary-red text-12px" />
                 </FormItem>
               )}
             />
@@ -126,24 +134,24 @@ export default function EditTaskModal({ type, btnName }: EditTaskModalProps) {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-foreground text-[12px] font-bold">
+                  <FormLabel className="text-foreground text-12px font-bold">
                     Description
                   </FormLabel>
                   <FormControl>
                     <textarea
                       {...field}
                       rows={4}
-                      className="bg-nav-background text-foreground focus:border-main-purple w-full resize-none rounded-[4px] border border-[#828FA340] px-4 py-2 text-[13px] placeholder:text-white/25 focus:outline-none"
+                      className="bg-nav-background text-foreground focus:border-main-purple text-13px rounded-4px w-full resize-none border border-[#828FA340] px-4 py-2 placeholder:text-white/25 focus:outline-none"
                       placeholder="e.g. It's always good to take a break. This 15 minute break will recharge the batteries a little."
                     />
                   </FormControl>
-                  <FormMessage className="text-primary-red text-[12px]" />
+                  <FormMessage className="text-primary-red text-12px" />
                 </FormItem>
               )}
             />
 
             <div className="flex flex-col gap-2">
-              <FormLabel className="text-foreground text-[12px] font-bold">
+              <FormLabel className="text-foreground text-12px font-bold">
                 Subtasks
               </FormLabel>
               {fields.map((field, index) => (
@@ -157,7 +165,7 @@ export default function EditTaskModal({ type, btnName }: EditTaskModalProps) {
                         <FormControl>
                           <input
                             {...subtaskField}
-                            className="bg-nav-background text-foreground focus:border-main-purple flex-1 rounded-[4px] border border-[#828FA340] px-4 py-2 text-[13px] focus:outline-none"
+                            className="bg-nav-background text-foreground focus:border-main-purple text-13px rounded-4px flex-1 border border-[#828FA340] px-4 py-2 focus:outline-none"
                             placeholder="e.g. Make coffee"
                           />
                         </FormControl>
@@ -171,21 +179,19 @@ export default function EditTaskModal({ type, btnName }: EditTaskModalProps) {
                           <X size={18} />
                         </Button>
                       </div>
-                      <FormMessage className="text-primary-red text-[12px]" />
+                      <FormMessage className="text-primary-red text-12px" />
                     </FormItem>
                   )}
                 />
               ))}
             </div>
 
-            <Button
-              type="button"
-              variant="secondary"
+            <button
               onClick={addSubtask}
-              className="bg-cancel-btn text-main-purple hover:bg-main-purple/20 rounded-full py-2 text-[13px] font-bold"
+              className="bg-cancel-btn text-main-purple hover:bg-main-purple/20 text-13px rounded-full py-2 font-bold"
             >
               + Add New Subtask
-            </Button>
+            </button>
 
             <FormField
               control={form.control}
@@ -201,16 +207,16 @@ export default function EditTaskModal({ type, btnName }: EditTaskModalProps) {
                       }}
                     />
                   </FormControl>
-                  <FormMessage className="text-primary-red text-[12px]" />
+                  <FormMessage className="text-primary-red text-12px" />
                 </FormItem>
               )}
             />
 
             <Button
               type="submit"
-              className="bg-main-purple hover:bg-main-purple-hover rounded-full py-2 text-[13px] font-bold text-white"
+              className="bg-main-purple hover:bg-main-purple-hover text-13px rounded-full py-2 font-bold text-white"
             >
-              {btnName}
+              {btnName === "edit" ? "Save Changes" : "Create Task"}
             </Button>
           </form>
         </Form>

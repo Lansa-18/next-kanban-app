@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useNavstore } from "@/store/useNavStore";
 import { motion, AnimatePresence } from "framer-motion";
 import BoardIcon from "./icons/BoardIcon";
+import AddBoardModal from "./AddBoardModal";
 
 export default function SideNavigation() {
   const navLinks = [
@@ -34,7 +35,7 @@ export default function SideNavigation() {
           className="bg-nav-background border-lines flex w-[20.1rem] flex-col border-r pr-6 pb-8"
         >
           <article className="mt-[40px] flex flex-col">
-            <p className="text-medium-grey mb-[19px] pl-[34px] text-[12px] leading-normal font-bold tracking-[2.4px]">
+            <p className="text-medium-grey text-12px mb-[19px] pl-[34px] leading-normal font-bold tracking-[2.4px]">
               ALL BOARDS ({navLinks.length})
             </p>
 
@@ -61,9 +62,11 @@ export default function SideNavigation() {
               ))}
               <button className="mt-2 flex items-center gap-3.5 pl-[34px]">
                 <BoardIcon fill="#635fc7" />
-                <span className="text-main-purple text-15px leading-normal font-bold">
-                  + Create New Board
-                </span>
+                <AddBoardModal btnName="Create New Board">
+                  <span className="text-main-purple hover:text-main-purple-hover cursor-pointer text-[15px] leading-normal font-bold">
+                    + Create New Board
+                  </span>
+                </AddBoardModal>
               </button>
             </div>
           </article>

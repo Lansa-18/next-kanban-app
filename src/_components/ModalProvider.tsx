@@ -6,25 +6,23 @@
 
 "use client";
 
-import DeleteConfirmModal from "./DeleteConfirmModal";
 import EditTaskModal from "./EditTaskModal";
 import ViewTaskModal from "./ViewTaskModal";
 import { usePlatformLaunchStore } from "@/store/usePlatformLaunchStore";
 
 export default function ModalProvider() {
-  const { isTaskOpen, isAddTaskOpen, isEditTaskOpen, isDeleteConfirmOpen } =
+  const { isTaskOpen, isAddTaskOpen, isEditTaskOpen } =
     usePlatformLaunchStore();
 
   return (
     <>
       {/* Conditionally render ViewTaskModal based on store state */}
       {isTaskOpen && <ViewTaskModal />}
-      {isDeleteConfirmOpen && <DeleteConfirmModal />}
       {isEditTaskOpen && (
-        <EditTaskModal type="Edit Task" btnName="Save Changes" />
+        <EditTaskModal type="edit" btnName="Save Changes" />
       )}
       {isAddTaskOpen && (
-        <EditTaskModal type="Add New Task" btnName="Create Task" />
+        <EditTaskModal btnName="Create Task" />
       )}
     </>
   );

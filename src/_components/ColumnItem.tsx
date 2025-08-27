@@ -7,6 +7,7 @@
 "use client";
 
 import { tasksObj } from "@/_lib/types";
+import { useGlobalStore } from "@/store/useGlobalStore";
 import { usePlatformLaunchStore } from "@/store/usePlatformLaunchStore";
 
 interface ColumnItemsProps {
@@ -20,8 +21,9 @@ export default function ColumnItem({
   numOfSubtasks,
   task,
 }: ColumnItemsProps) {
-  const { toggleTaskVisibility, setSelectedTaskToView } =
-    usePlatformLaunchStore();
+  const { toggleTaskVisibility } = usePlatformLaunchStore();
+
+  const { setSelectedTaskToView } = useGlobalStore();
 
   const setTask = () => {
     setSelectedTaskToView(task);

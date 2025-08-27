@@ -1,60 +1,79 @@
-import { usePlatformLaunchStore } from "@/store/usePlatformLaunchStore";
-import React, { useEffect, useRef } from "react";
+"use client";
 
-export default function DeleteConfirmModal() {
-  const { setIsTaskOpen, isDeleteConfirmOpen, setIsDeleteConfirmOpen } =
-    usePlatformLaunchStore();
-  const delModalRef = useRef<HTMLElement>(null);
+import React from "react";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { useGlobalStore } from "@/store/useGlobalStore";
 
-  const onClose = () => {
-    setIsDeleteConfirmOpen(false);
-    setIsTaskOpen(true);
+interface DeleteConfirmModalProps {
+  type?: string;
+  children?: React.ReactElement;
+  onConfirm?: () => void;
+}
+
+export default function DeleteConfirmModal({
+  children,
+  type,
+  onConfirm,
+}: DeleteConfirmModalProps) {
+  const [open, setOpen] = React.useState(false);
+  const { selectedBoard, selectedTaskToView } = useGlobalStore();
+
+  const handleConfirm = () => {
+    if (onConfirm) {
+      onConfirm();
+    }
+    setOpen(false);
   };
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (delModalRef && !delModalRef.current?.contains(e.target as Node)) {
-        setIsDeleteConfirmOpen(false);
-        setIsTaskOpen(true);
-      }
-    };
-
-    if (isDeleteConfirmOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [setIsDeleteConfirmOpen, setIsTaskOpen, isDeleteConfirmOpen]);
+  const handleCancel = () => {
+    setOpen(false);
+  };
 
   return (
-    <section className="fixed flex min-h-screen w-full items-center justify-center bg-black/50">
-      <article
-        ref={delModalRef}
-        className="bg-nav-background rounded-6px flex w-[30rem] flex-col gap-6 p-8"
-      >
-        <p className="text-18px text-primary-red leading-normal font-bold">
-          Delete this board?
-        </p>
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>{children}</DialogTrigger>
+      <DialogContent className="bg-nav-background border-lines max-w-[30rem] rounded-[6px] border p-0">
+        <div className="p-8">
+          <DialogHeader className="mb-6">
+            <DialogTitle className="text-primary-red text-left text-[18px] leading-normal font-bold">
+              {type === "board" ? "Delete this board?" : "Delete this task?"}
+            </DialogTitle>
+            <DialogDescription className="text-medium-grey text-left text-[13px] leading-[23px] font-medium">
+              Are you sure you want to delete the &apos;
+              {type === "board"
+                ? selectedBoard?.name
+                : selectedTaskToView?.title}
+              &apos; board? This action will remove all columns and tasks and
+              cannot be reversed.{" "}
+            </DialogDescription>
+          </DialogHeader>
 
-        <p className="text-medium-grey text-13px leading-[23px] font-medium">
-          Are you sure you want to delete the ‘Platform Launch’ board? This
-          action will remove all columns and tasks and cannot be reversed.
-        </p>
-
-        <div className="flex justify-between gap-4">
-          <button className="text-13px bg-primary-red hover:bg-secondary-red basis-1/2 rounded-[20px] py-2 font-bold text-white transition-all duration-300">
-            Delete
-          </button>
-          <button
-            onClick={onClose}
-            className="text-13px bg-cancel-btn text-main-purple basis-1/2 rounded-[20px] font-bold"
-          >
-            Cancel
-          </button>
+          <DialogFooter className="flex flex-row justify-between gap-4">
+            <Button
+              onClick={handleConfirm}
+              className="bg-primary-red hover:bg-secondary-red basis-1/2 rounded-[20px] py-2 text-[13px] font-bold text-white ring-0 transition-all duration-300 focus:ring-0 focus:ring-offset-0 focus:outline-none focus-visible:ring-0 focus-visible:ring-offset-0"
+            >
+              Delete
+            </Button>
+            <Button
+              onClick={handleCancel}
+              variant="secondary"
+              className="bg-cancel-btn text-main-purple basis-1/2 rounded-[20px] py-2 text-[13px] font-bold"
+            >
+              Cancel
+            </Button>
+          </DialogFooter>
         </div>
-      </article>
-    </section>
+      </DialogContent>
+    </Dialog>
   );
 }

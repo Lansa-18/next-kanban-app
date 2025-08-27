@@ -10,21 +10,14 @@ import SubTaskList from "./SubTaskList";
 import StatusDropdown from "./StatusDropdown";
 import { usePlatformLaunchStore } from "@/store/usePlatformLaunchStore";
 import { useEffect, useRef } from "react";
+import { useGlobalStore } from "@/store/useGlobalStore";
+import DeleteConfirmModal from "./DeleteConfirmModal";
 
 export default function ViewTaskModal() {
   const modalRef = useRef<HTMLElement>(null);
-  const {
-    isTaskOpen,
-    setIsEditTaskOpen,
-    setIsTaskOpen,
-    setIsDeleteConfirmOpen,
-    selectedTaskToView,
-  } = usePlatformLaunchStore();
-
-  const handleOpenDeleteModal = () => {
-    setIsDeleteConfirmOpen(true);
-    setIsTaskOpen(false);
-  };
+  const { isTaskOpen, setIsEditTaskOpen, setIsTaskOpen } =
+    usePlatformLaunchStore();
+  const { selectedTaskToView } = useGlobalStore();
 
   // This is to handle closing the modal once any where outside the modal is clicked.
   useEffect(() => {
@@ -60,12 +53,11 @@ export default function ViewTaskModal() {
           >
             Edit Task
           </p>
-          <p
-            onClick={handleOpenDeleteModal}
-            className="text-primary-red cursor-pointer transition-all duration-300 hover:scale-105"
-          >
-            Delete Task
-          </p>
+          <DeleteConfirmModal>
+            <p className="text-primary-red cursor-pointer transition-all duration-300 hover:scale-105">
+              Delete Task
+            </p>
+          </DeleteConfirmModal>
         </div>
 
         {/* Task Information Section */}

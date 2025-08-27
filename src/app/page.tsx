@@ -9,10 +9,22 @@
 import Column from "@/_components/Column";
 import { ColumnObjType } from "@/_lib/types";
 import { useGetBoardData } from "@/hooks/useGetBoardData";
+import { useGlobalStore } from "@/store/useGlobalStore";
 import Button from "@/ui/Button";
+import { useEffect } from "react";
 
 export default function Home() {
   const { data: boardData, isLoading, isError } = useGetBoardData();
+  const { setSelectedBoard } = useGlobalStore();
+  console.log(boardData);
+
+  useEffect(() => {
+    if (!boardData) return;
+    const firstBoard = boardData.at(0);
+    if (firstBoard) {
+      setSelectedBoard(firstBoard);
+    }
+  }, [boardData, setSelectedBoard]);
 
   if (isLoading) {
     return (
@@ -79,7 +91,7 @@ export default function Home() {
 
   // Main board layout with three columns and "Add New Column" option
   return (
-    <article className="flex gap-6 p-6 bg-background">
+    <article className="bg-background flex gap-6 p-6">
       {/* Todo Column */}
       <Column
         columnObj={columnObj.at(0)}
