@@ -13,7 +13,7 @@ import SideNavigation from "@/_components/SideNavigation";
 import OpenSideNav from "@/_components/OpenSideNav";
 import ModalProvider from "@/_components/ModalProvider";
 import ReactQueryProvider from "@/_components/ReactQueryProvider";
-import {ReactQueryDevtools} from '@tanstack/react-query-devtools'
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 // Google Font configuration
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -37,18 +37,19 @@ export default function RootLayout({
       <ReactQueryProvider>
         <ThemeProvider>
           <body
-            className={`${plusJakartaSans.variable} bg-background text-foreground border-primary-red relative flex min-h-screen antialiased`}
+            className={`${plusJakartaSans.variable} bg-background text-foreground border-primary-red relative flex h-screen min-h-screen antialiased`}
           >
             {/* Main application layout */}
-            <section className="flex flex-1 flex-col">
+            <section className="flex min-h-screen min-w-screen flex-col">
               {/* Top header bar */}
               <Header />
 
               {/* Main content area with sidebar and page content */}
-              <div className="border-primary-red flex flex-1">
+              <div className="flex h-full min-h-0 flex-1">
                 <SideNavigation />
 
-                {children}
+                {/* Main content container */}
+                <main className="min-h-0 flex-1 overflow-auto">{children}</main>
               </div>
             </section>
 

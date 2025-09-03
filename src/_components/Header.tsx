@@ -39,11 +39,11 @@ export default function Header() {
 
   return (
     <nav className="bg-nav-background border-lines flex items-center border-t border-b px-6">
-      <div className="border-primary-red w-[277.5px]">
+      <div className="w-[275px] min-w-[275px]">
         <Logo />
       </div>
 
-      <div className="border-lines flex flex-1 items-center justify-between border-l py-4 pl-6">
+      <div className="border-lines w-full flex items-center justify-between border-l py-3.5 pl-6">
         <h2 className="text-2xl font-bold">{headerText}</h2>{" "}
         <div className="relative flex items-center gap-6">
           <Button onClick={handleOpenAddTaskModal}>+ Add New Task</Button>

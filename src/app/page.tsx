@@ -10,6 +10,7 @@ import Column from "@/_components/Column";
 import { ColumnObjType } from "@/_lib/types";
 import { useGetBoardData } from "@/hooks/useGetBoardData";
 import { useGlobalStore } from "@/store/useGlobalStore";
+// import { FadeLoader } from "react-spinners";
 import Button from "@/ui/Button";
 import { useEffect } from "react";
 
@@ -19,9 +20,9 @@ export default function Home() {
 
   useEffect(() => {
     if (!boardData) return;
-    const firstBoard = boardData.at(0);
-    if (firstBoard) {
-      setSelectedBoard(firstBoard);
+    const platformBoard = boardData.at(0);
+    if (platformBoard) {
+      setSelectedBoard(platformBoard);
     }
   }, [boardData, setSelectedBoard]);
 
@@ -31,6 +32,7 @@ export default function Home() {
         <div className="text-medium-grey text-18px text-center leading-normal font-bold">
           Loading...
         </div>
+        {/* <FadeLoader color="white" /> */}
       </article>
     );
   }
@@ -46,9 +48,6 @@ export default function Home() {
   }
 
   const platformLaunchData = boardData.at(0);
-
-  // Extract individual columns by their expected positions
-  // Index 0 = Todo, Index 1 = Doing, Index 2 = Done
   const platformTodoColumns = platformLaunchData?.columns[0];
   const platformDoingColumns = platformLaunchData?.columns[1];
   const platformDoneColumns = platformLaunchData?.columns[2];
@@ -58,23 +57,21 @@ export default function Home() {
   const columnObj: ColumnObjType[] = [
     {
       colType: "Todo",
-      color: "#49C4E5", // Light blue for todo items
+      color: "#49C4E5",
       colData: platformTodoColumns?.tasks,
     },
     {
       colType: "Doing",
-      color: "#8471F2", // Purple for in-progress items
+      color: "#8471F2",
       colData: platformDoingColumns?.tasks,
     },
     {
       colType: "Done",
-      color: "#67E2AE", // Green for completed items
+      color: "#67E2AE",
       colData: platformDoneColumns?.tasks,
     },
   ];
 
-  // Empty state: Show message when no columns exist
-  // This condition may never be true given our data structure, but provides fallback
   if (columnObj.length === 0) {
     return (
       <article className="flex flex-1 items-center justify-center p-6">
@@ -90,34 +87,37 @@ export default function Home() {
 
   // Main board layout with three columns and "Add New Column" option
   return (
-    <article className="bg-background flex gap-6 p-6">
-      {/* Todo Column */}
-      <Column
-        columnObj={columnObj.at(0)}
-        numOfItems={columnObj.at(0)?.colData?.length}
-        columnType={columnObj.at(0)?.colType}
-        circleColor={columnObj.at(0)?.color}
-      />
+    <article className="bg-background flex h-full min-h-0  border-primary-red w-full gap-6 overflow-x-auto p-6">
+      {/* Columns Container */}
+      <div className="flex min-w-fit gap-6">
+        {/* Todo Column */}
+        <Column
+          columnObj={columnObj.at(0)}
+          numOfItems={columnObj.at(0)?.colData?.length}
+          columnType={columnObj.at(0)?.colType}
+          circleColor={columnObj.at(0)?.color}
+        />
 
-      {/* Doing Column */}
-      <Column
-        columnObj={columnObj.at(1)}
-        numOfItems={columnObj.at(1)?.colData?.length}
-        columnType={columnObj.at(1)?.colType}
-        circleColor={columnObj.at(1)?.color}
-      />
+        {/* Doing Column */}
+        <Column
+          columnObj={columnObj.at(1)}
+          numOfItems={columnObj.at(1)?.colData?.length}
+          columnType={columnObj.at(1)?.colType}
+          circleColor={columnObj.at(1)?.color}
+        />
 
-      {/* Done Column */}
-      <Column
-        columnObj={columnObj.at(2)}
-        numOfItems={columnObj.at(2)?.colData?.length}
-        columnType={columnObj.at(2)?.colType}
-        circleColor={columnObj.at(2)?.color}
-      />
+        {/* Done Column */}
+        <Column
+          columnObj={columnObj.at(2)}
+          numOfItems={columnObj.at(2)?.colData?.length}
+          columnType={columnObj.at(2)?.colType}
+          circleColor={columnObj.at(2)?.color}
+        />
 
-      {/* Add New Column Button */}
-      <div className="text-medium-grey hover:text-main-purple bg-gradient-overlay flex w-[300px] cursor-pointer items-center justify-center rounded-lg font-bold transition-all duration-300">
-        + New Column
+        {/* Add New Column Button */}
+        <div className="text-medium-grey hover:text-main-purple bg-gradient-overlay mt-12 flex w-[280px] min-w-[280px] cursor-pointer items-center justify-center rounded-lg font-bold transition-all duration-300">
+          + New Column
+        </div>
       </div>
     </article>
   );

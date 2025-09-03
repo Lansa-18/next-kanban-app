@@ -32,7 +32,7 @@ export default function SideNavigation() {
             damping: 30,
             duration: 0.3,
           }}
-          className="bg-nav-background border-lines flex w-[20.1rem] flex-col border-r pr-6 pb-8"
+          className="bg-nav-background border-lines flex h-full w-[300px] min-w-[300px] flex-col border-r pr-6 pb-8"
         >
           <article className="mt-[40px] flex flex-col">
             <p className="text-medium-grey text-12px mb-[19px] pl-[34px] leading-normal font-bold tracking-[2.4px]">

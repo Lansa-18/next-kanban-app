@@ -6,18 +6,6 @@
 import { supabase } from "./supabase";
 import { boardDataObj } from "./types";
 
-/**
- * Fetches complete board data including nested columns, tasks, and subtasks
- * Uses Supabase's nested query feature to get all related data in one request
- *
- * @returns {Promise} Array of board objects with nested structure:
- *   - boards
- *     - columns (ordered by position)
- *       - tasks (ordered by position)
- *         - subtasks
- *
- * @throws {Error} Throws error if Supabase query fails
- */
 export async function getBoardData(): Promise<boardDataObj[]> {
   const { data, error } = await supabase
     .from("boards")
